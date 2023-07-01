@@ -7,4 +7,5 @@ public class DoctorDTO {
     private String fristName;
     private String lastName;
     private String specialization;
+
 }

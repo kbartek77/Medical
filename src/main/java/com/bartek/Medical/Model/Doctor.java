@@ -15,7 +15,7 @@ import org.springframework.data.annotation.Id;
 public class Doctor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long Id;
+    private long id;
     private String email;
     private String password;
     private String firstName;

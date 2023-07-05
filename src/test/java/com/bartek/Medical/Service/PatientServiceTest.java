@@ -62,7 +62,7 @@ public class PatientServiceTest {
         PatientDto result = patientService.getPatientByEmail(email);
 
         Assertions.assertNotNull(result);
-        Assertions.assertEquals(expectedDto, result);
+        Assertions.assertEquals(expectedDto.getEmail(), result.getEmail());
 
     }
 

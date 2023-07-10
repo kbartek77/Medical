@@ -1,18 +1,12 @@
 package com.bartek.Medical.Controller;
 
 
-import com.bartek.Medical.Mapper.PatientMapper;
-import com.bartek.Medical.Model.EditedPatient;
-import com.bartek.Medical.Model.Patient;
 import com.bartek.Medical.Model.PatientDto;
 import com.bartek.Medical.Service.PatientService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/patients")

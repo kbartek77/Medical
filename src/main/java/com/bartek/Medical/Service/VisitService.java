@@ -7,17 +7,18 @@ import com.bartek.Medical.Model.Visit;
 import com.bartek.Medical.Model.VisitDto;
 import com.bartek.Medical.PatientRepositoryImpl.PatientRepository;
 import com.bartek.Medical.VisitRepostioryImpl.VisitRespository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class VisitService {
     VisitRespository visitRespository;
     PatientRepository patientRepository;
-    private VisitMapper visitMapper;
+    private final VisitMapper visitMapper;
 
 
     public VisitDto createVisit(LocalDateTime dateTime) {
@@ -25,7 +26,7 @@ public class VisitService {
             throw new InvalidDateTimeException("Nie można utworzyć wizyty dla przeszłych dat.");
         }
 
-        if (dateTime.getMinute() % 15 != 0) {
+        if (dateTime.getMinute() % 15 == 0) {
             throw new InvalidDateTimeException("Wizyty są dostępne tylko w pełnych kwadransach godziny.");
         }
 
@@ -66,6 +67,6 @@ public class VisitService {
 
         List<Visit> patientVisits = visitRespository.findByPatient(patient);
 
-        return visitMapper.toDtoList(patientVisits);
+        return visitMapper.toDtos(patientVisits);
     }
 }

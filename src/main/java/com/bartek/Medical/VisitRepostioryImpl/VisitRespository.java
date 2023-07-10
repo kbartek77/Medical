@@ -11,5 +11,6 @@ import java.util.List;
 @Repository
 public interface VisitRespository extends JpaRepository<Visit, Long> {
     List<Visit> findByDateTime(LocalDateTime dateTime);
+
     List<Visit> findByPatient(Patient patient);
 }

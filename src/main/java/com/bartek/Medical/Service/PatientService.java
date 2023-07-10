@@ -4,7 +4,6 @@ package com.bartek.Medical.Service;
 import com.bartek.Medical.Exception.InvalidEmailException;
 import com.bartek.Medical.Exception.PatientNotFoundException;
 import com.bartek.Medical.Mapper.PatientMapper;
-
 import com.bartek.Medical.Model.Patient;
 import com.bartek.Medical.Model.PatientDto;
 import com.bartek.Medical.PatientRepositoryImpl.PatientRepository;

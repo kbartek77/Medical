@@ -8,6 +8,7 @@ import com.bartek.Medical.Model.VisitDto;
 import com.bartek.Medical.PatientRepositoryImpl.PatientRepository;
 import com.bartek.Medical.VisitRepostioryImpl.VisitRespository;
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -21,26 +22,21 @@ public class VisitService {
     private final VisitMapper visitMapper;
 
 
-    public VisitDto createVisit(LocalDateTime dateTime) {
-        if (dateTime.isBefore(LocalDateTime.now())) {
+    public VisitDto createVisit(VisitDto visitDto) {
+        if (visitDto.getDateTime().isBefore(LocalDateTime.now())) {
             throw new InvalidDateTimeException("Nie można utworzyć wizyty dla przeszłych dat.");
         }
 
-        if (dateTime.getMinute() % 15 == 0) {
+        if (visitDto.getDateTime().getMinute() % 15 != 0) {
             throw new InvalidDateTimeException("Wizyty są dostępne tylko w pełnych kwadransach godziny.");
         }
 
-        List<Visit> existingVisits = visitRespository.findByDateTime(dateTime);
+        List<Visit> existingVisits = visitRespository.findByDateTime(visitDto.getDateTime());
         if (!existingVisits.isEmpty()) {
             throw new VisitConflictException("Wizyta w tym terminie już istnieje.");
         }
-
-        Visit newVisit = new Visit();
-        newVisit.setDateTime(dateTime);
-
-        Visit savedVisit = visitRespository.save(newVisit);
-
-        return visitMapper.toDto(savedVisit);
+        visitRespository.save(visitMapper.toEntity(visitDto));
+        return visitDto;
     }
 
     public VisitDto assignPatientToVisit(Long visitId, Long patientId) {

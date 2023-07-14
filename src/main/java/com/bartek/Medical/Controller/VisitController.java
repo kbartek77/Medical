@@ -12,16 +12,16 @@ import java.util.List;
 @RequestMapping("/visits")
 @AllArgsConstructor
 public class VisitController {
-    VisitService visitService;
+    private final VisitService visitService;
 
     @PostMapping
     public ResponseEntity<VisitDto> createVisit(@RequestBody VisitDto visitDto) {
-        VisitDto createdVisit = visitService.createVisit(visitDto.getDateTime());
+        VisitDto createdVisit = visitService.createVisit(visitDto);
         return ResponseEntity.ok(createdVisit);
     }
 
     @PatchMapping("/{visitId}/assign")
-    public ResponseEntity<VisitDto> assignPatientToVisit(@PathVariable Long visitId, @RequestParam Long patientId) {
+    public ResponseEntity<VisitDto> assignPatientToVisit(@PathVariable Long visitId, @RequestBody Long patientId) {
         VisitDto assignedVisit = visitService.assignPatientToVisit(visitId, patientId);
         return ResponseEntity.ok(assignedVisit);
     }

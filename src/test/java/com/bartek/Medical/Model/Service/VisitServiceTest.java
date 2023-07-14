@@ -1,10 +1,13 @@
-package com.bartek.Medical.Model;
+package com.bartek.Medical.Model.Service;
 
 import com.bartek.Medical.Exception.InvalidDateTimeException;
 import com.bartek.Medical.Exception.PatientNotFoundException;
 import com.bartek.Medical.Exception.VisitAlreadyAssignedException;
 import com.bartek.Medical.Exception.VisitNotFoundException;
 import com.bartek.Medical.Mapper.VisitMapper;
+import com.bartek.Medical.Model.Patient;
+import com.bartek.Medical.Model.Visit;
+import com.bartek.Medical.Model.VisitDto;
 import com.bartek.Medical.PatientRepositoryImpl.PatientRepository;
 import com.bartek.Medical.Service.VisitService;
 import com.bartek.Medical.VisitRepostioryImpl.VisitRespository;
@@ -33,33 +36,31 @@ public class VisitServiceTest {
     private VisitService visitService;
 
     @Test
-    void createVisit_ValidDateTime_ReturnCreatedVisit() {
-        LocalDateTime dateTime = LocalDateTime.now().plusDays(1).withHour(12);
+    void createVisit_ValidData_ReturnCreatedVisitDto() {
+        LocalDateTime dateTime = LocalDateTime.of(2024,10,10,10,30,00);
+
+        VisitDto visitDto = new VisitDto();
+        visitDto.setDateTime(dateTime);
+
+        Visit createdVisit = new Visit();
+        createdVisit.setDateTime(dateTime);
 
         VisitDto expectedVisitDto = new VisitDto();
-        expectedVisitDto.setId(1L);
         expectedVisitDto.setDateTime(dateTime);
-        expectedVisitDto.setPatientId(null);
 
-        when(visitRespository.findByDateTime(dateTime)).thenReturn(Collections.emptyList());
-        when(visitRespository.save(any(Visit.class))).thenReturn(new Visit());
-        when(visitMapper.toDto(any(Visit.class))).thenReturn(expectedVisitDto);
+        VisitDto resultDto = visitService.createVisit(visitDto);
 
-        VisitDto createdVisitDto = visitService.createVisit(dateTime);
-
-        Assertions.assertEquals(expectedVisitDto, createdVisitDto);
-
-        verify(visitRespository, times(1)).findByDateTime(dateTime);
-        verify(visitRespository, times(1)).save(any(Visit.class));
-        verify(visitMapper, times(1)).toDto(any(Visit.class));
+        Assertions.assertEquals(expectedVisitDto, resultDto);
     }
 
     @Test
     void createVisit_InvalidDateTime_ThrowInvalidDateTimeException() {
         LocalDateTime dateTime = LocalDateTime.now().minusDays(1);
+        VisitDto visitDto = new VisitDto();
+        visitDto.setDateTime(dateTime);
 
         var exception = Assertions.assertThrows(InvalidDateTimeException.class, () ->
-                visitService.createVisit(dateTime)
+                visitService.createVisit(visitDto)
         );
         Assertions.assertEquals("Nie można utworzyć wizyty dla przeszłych dat.", exception.getMessage());
     }

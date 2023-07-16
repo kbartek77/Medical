@@ -1,4 +1,4 @@
-package com.bartek.Medical.Service;
+package com.bartek.Medical.Model.Service;
 
 import com.bartek.Medical.Exception.InvalidEmailException;
 import com.bartek.Medical.Exception.PatientNotFoundException;
@@ -7,6 +7,7 @@ import com.bartek.Medical.Model.Patient;
 import com.bartek.Medical.Model.PatientDto;
 import com.bartek.Medical.PatientRepositoryImpl.PatientRepository;
 
+import com.bartek.Medical.Service.PatientService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

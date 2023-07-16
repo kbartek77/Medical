@@ -66,6 +66,11 @@
 			<version>${mapstruck.version}</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.liquibase</groupId>
+			<artifactId>liquibase-core</artifactId>
+			<version>3.6.2</version>
+		</dependency>
 
 	</dependencies>
 

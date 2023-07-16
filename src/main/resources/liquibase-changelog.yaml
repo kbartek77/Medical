@@ -1,0 +1,3 @@
+datebaseChangelog:
+  - includeAll:
+      -path: liquibase-changelog/version

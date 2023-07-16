@@ -31,9 +31,15 @@ public class VisitService {
             throw new InvalidDateTimeException("Wizyty są dostępne tylko w pełnych kwadransach godziny.");
         }
 
-        List<Visit> existingVisits = visitRespository.findByDateTime(visitDto.getDateTime());
+        List<Visit> existingVisits = visitRespository.findByDateTimeRange(visitDto.getDateTime(), visitDto.getEndDateTime());
         if (!existingVisits.isEmpty()) {
             throw new VisitConflictException("Wizyta w tym terminie już istnieje.");
+        }
+        if (visitDto.getEndDateTime().isBefore(visitDto.getDateTime())) {
+            throw new InvalidDateTimeException("Wizyta nie może się zakończyć przed rozpoczęciem");
+        }
+        if (visitDto.getEndDateTime().getMinute() % 15 != 0) {
+            throw new InvalidDateTimeException("Wizyty kończą się tylko w pełnych kwadransach godziny");
         }
         visitRespository.save(visitMapper.toEntity(visitDto));
         return visitDto;

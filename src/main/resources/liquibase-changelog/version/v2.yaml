@@ -1,0 +1,36 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2
+      author: kbartek
+      changes:
+        - createTable:
+            tableName: visit
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: pk_visit_id
+                    nullable: false
+              - column:
+                  name: date_Time
+                  type: datetime
+                  constraints:
+                    unique: true
+                    uniqueConstraintName: unique_visit_term
+              - column:
+                  name: end_Date_Time
+                  type: datetime
+                  constraints:
+                    nullable: false
+              - column:
+                  name: patient_id
+                  type: int
+                  constraints:
+                    nullable: true
+                    foreignKeyName: fk_patient_id
+                    references:
+                      tableName: patient
+                      columnName: id

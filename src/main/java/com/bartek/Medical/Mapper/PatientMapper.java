@@ -11,8 +11,6 @@ import java.util.List;
 public interface PatientMapper  {
     PatientDto toDto(Patient patient);
     Patient toEntity(PatientDto patientDto);
-
     List<PatientDto> toDtoList(List<Patient> patients);
-
     void updateEntityFromDto(PatientDto patientDto, @MappingTarget Patient patient);
 }

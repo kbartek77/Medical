@@ -37,16 +37,20 @@ public class VisitServiceTest {
 
     @Test
     void createVisit_ValidData_ReturnCreatedVisitDto() {
-        LocalDateTime dateTime = LocalDateTime.of(2024,10,10,10,30,00);
+        LocalDateTime dateTime = LocalDateTime.of(2024, 10, 10, 10, 30, 00);
+        LocalDateTime endDateTime = LocalDateTime.of(2024, 10, 10, 11, 30, 00);
 
         VisitDto visitDto = new VisitDto();
         visitDto.setDateTime(dateTime);
+        visitDto.setEndDateTime(endDateTime);
 
         Visit createdVisit = new Visit();
         createdVisit.setDateTime(dateTime);
+        createdVisit.setEndDateTime(endDateTime);
 
         VisitDto expectedVisitDto = new VisitDto();
         expectedVisitDto.setDateTime(dateTime);
+        expectedVisitDto.setEndDateTime(endDateTime);
 
         VisitDto resultDto = visitService.createVisit(visitDto);
 

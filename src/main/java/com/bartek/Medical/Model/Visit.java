@@ -15,12 +15,9 @@ public class Visit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @Column(nullable = false)
     private LocalDateTime dateTime;
-
     private LocalDateTime endDateTime;
-
     @ManyToOne
     @JoinColumn(name = "patient_id")
     private Patient patient;

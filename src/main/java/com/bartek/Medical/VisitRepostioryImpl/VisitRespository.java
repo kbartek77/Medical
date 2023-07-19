@@ -13,9 +13,7 @@ import java.util.List;
 @Repository
 public interface VisitRespository extends JpaRepository<Visit, Long> {
     List<Visit> findByDateTime(LocalDateTime dateTime);
-
     List<Visit> findByPatient(Patient patient);
-
     @Query("SELECT v FROM Visit v WHERE v.dateTime < :endDateTime AND v.endDateTime > :dateTime")
     List<Visit> findByDateTimeRange(@Param("dateTime") LocalDateTime dateTime, @Param("endDateTime") LocalDateTime endDateTime);
 }

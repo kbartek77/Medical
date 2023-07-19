@@ -48,7 +48,5 @@ public class PatientController {
         } else {
             return "Pacjent o podanym adresie e-mail nie został odnaleziony.";
         }
-
-
     }
 }

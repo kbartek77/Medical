@@ -1,6 +1,5 @@
 package com.bartek.Medical.Model.controller;
 
-import com.bartek.Medical.Model.Patient;
 import com.bartek.Medical.Model.PatientDto;
 import com.bartek.Medical.PatientRepositoryImpl.PatientRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -10,16 +9,20 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
+import org.springframework.jdbc.datasource.init.ScriptUtils;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.springframework.web.bind.annotation.RestController;
 
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.time.LocalDate;
 
-import static org.mockito.Mockito.when;
+import static com.bartek.Medical.Model.controller.VisitControllerTest.dataLoaded;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -34,6 +37,17 @@ public class PatientControllerTest {
     PatientRepository patientRepository;
     @Autowired
     ObjectMapper objectMapper;
+    @Autowired
+    DataSource dataSource;
+//    @BeforeEach
+//    void setUp() throws SQLException {
+//        if (dataLoaded == false) {
+//            try (Connection connection = dataSource.getConnection()) {
+//                ScriptUtils.executeSqlScript(connection, new ClassPathResource("schema.sql"));
+//            }
+//            dataLoaded = true;
+//        }
+//    }
 
     @Rollback
     @Test
@@ -43,6 +57,7 @@ public class PatientControllerTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.jsonPath("$").isArray());
     }
+
     @Rollback
     @Test
     void addPatient_DataCorrect_PatientCreated() throws Exception {
@@ -50,16 +65,17 @@ public class PatientControllerTest {
         patient.setFirstName("Bartek");
         patient.setLastName("KKk");
         patient.setEmail("test");
-        patient.setBirthday(LocalDate.of(2000,10,10));
+        patient.setBirthday(LocalDate.of(2000, 10, 10));
         patient.setPassword("Xxx");
         patient.setIdCardNo("202");
         patient.setPhoneNumber("998");
         mockMvc.perform(MockMvcRequestBuilders.post("/patients")
-                .content(objectMapper.writeValueAsString(patient))
-                .contentType(MediaType.APPLICATION_JSON))
+                        .content(objectMapper.writeValueAsString(patient))
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.email").value("test"));
     }
+
     @Rollback
     @Test
     void addPatient_PatientExist_ReturnedPatient() throws Exception {
@@ -70,13 +86,22 @@ public class PatientControllerTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.email").value("john.doe@example.com"));
     }
+
     @Rollback
     @Test
     void deletePatientbyEmail_PatientExist_PatientDeleted() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/patients/john.doe@example.com"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.email").value("john.doe@example.com"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.firstName").value("John"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.lastName").value("Doe"));
+
         mockMvc.perform(MockMvcRequestBuilders.delete("/patients/john.doe@example.com"))
                 .andExpect(status().isOk())
                 .andExpect(content().string("true"));
     }
+
     @Rollback
     @Test
     void updatePatient_PatientExist_PatientUpdated() throws Exception {
@@ -94,6 +119,7 @@ public class PatientControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.firstName").value("Bartek"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.lastName").value("kkk"));
     }
+
     @Rollback
     @Test
     void editPassword_PatientExist_PasswordUpdated() throws Exception {

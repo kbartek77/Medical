@@ -15,20 +15,22 @@ databaseChangeLog:
                     primaryKeyName: pk_visit_id
                     nullable: false
               - column:
-                  name: dateTime
+                  name: date_Time
                   type: datetime
                   constraints:
                     unique: true
                     uniqueConstraintName: unique_visit_term
               - column:
-                  name: endDateTime
+                  name: end_Date_Time
                   type: datetime
                   constraints:
-                    nullable: true
+                    nullable: false
               - column:
                   name: patient_id
                   type: int
                   constraints:
                     nullable: true
-                    foreignKey: true
                     foreignKeyName: fk_patient_id
+                    references:
+                      tableName: patient
+                      columnName: id

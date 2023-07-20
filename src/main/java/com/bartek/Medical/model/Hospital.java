@@ -12,13 +12,16 @@ import java.util.List;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class Doctor {
+public class Hospital {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String email;
-    private String password;
-    private String firstName;
-    private String lastName;
-    private String specialization;
+    private String name;
+    private String town;
+    private String postalCode;
+    private String street;
+    private String numberOfBuilding;
+    @ManyToMany(mappedBy = "Hospitals")
+    private List<Doctor> doctors = new LinkedList<>();
+
 }

@@ -16,8 +16,8 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class VisitService {
-    VisitRespository visitRespository;
-    PatientRepository patientRepository;
+    private final VisitRespository visitRespository;
+    private final PatientRepository patientRepository;
     private final VisitMapper visitMapper;
 
 

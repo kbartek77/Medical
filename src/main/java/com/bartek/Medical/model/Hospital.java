@@ -5,8 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Entity
@@ -21,7 +21,6 @@ public class Hospital {
     private String postalCode;
     private String street;
     private String numberOfBuilding;
-    @ManyToMany(mappedBy = "Hospitals")
-    private List<Doctor> doctors = new LinkedList<>();
-
+    @ManyToMany(mappedBy = "hospitals")
+    private Set<Doctor> doctors = new HashSet<>();
 }

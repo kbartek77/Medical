@@ -17,14 +17,13 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 public class HospitalService {
-    HospitalRepository hospitalRepository;
+    private final HospitalRepository hospitalRepository;
     private final HospitalMapper hospitalMapper;
-    private DoctorMapper doctorMapper;
+    private final DoctorMapper doctorMapper;
 
     public List<HospitalDto> getAllHospitals() {
         List<Hospital> hospitals = hospitalRepository.findAll();
         return hospitalMapper.toDtoList(hospitals);
-
     }
 
     public HospitalDto addHospital(HospitalDto hospitalDto) {
@@ -32,13 +31,12 @@ public class HospitalService {
         if (existingHospital.isPresent()) {
             throw new InvalidNameHospitalException("Taka nazwa szpitala już istnieje");
         }
-        Hospital hospital = hospitalMapper.toEntitiy(hospitalDto);
+        Hospital hospital = hospitalMapper.toEntity(hospitalDto);
 
         hospitalRepository.save(hospital);
-
         return hospitalDto;
     }
-    public List <DoctorDTO> getAllDoctorFromHospital (String hospitalName) {
+    public List <DoctorDTO> getAllDoctorsFromHospital (String hospitalName) {
         Hospital hospital = hospitalRepository.findByName(hospitalName)
                 .orElseThrow(() -> new InvalidNameHospitalException("Nie ma Szpitala o takiej nazwie"));
         return hospital.getDoctors().stream().map(doctorMapper::toDto).collect(Collectors.toList());

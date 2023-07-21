@@ -16,7 +16,7 @@ import java.util.Optional;
 @Service
 @AllArgsConstructor
 public class PatientService {
-    PatientRepository patientRepository;
+    private final PatientRepository patientRepository;
     private final PatientMapper patientMapper;
 
     public List<PatientDto> getAllPatients() {

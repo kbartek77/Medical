@@ -9,6 +9,6 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface HospitalMapper {
     HospitalDto toDto(Hospital hospital);
-    Hospital toEntitiy(HospitalDto hospitalDto);
+    Hospital toEntity(HospitalDto hospitalDto);
     List<HospitalDto> toDtoList (List<Hospital> hospitals);
 }

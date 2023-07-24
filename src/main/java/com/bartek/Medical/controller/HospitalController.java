@@ -16,17 +16,18 @@ public class HospitalController {
     private final HospitalService hospitalService;
 
     @PostMapping
-    public ResponseEntity<HospitalDto> addHospital(@RequestBody HospitalDto hospitalDto){
+    public ResponseEntity<HospitalDto> addHospital(@RequestBody HospitalDto hospitalDto) {
         HospitalDto addHospital = hospitalService.addHospital(hospitalDto);
         return ResponseEntity.ok(addHospital);
     }
+
     @GetMapping
-    public List<HospitalDto> getAllHospitlas(){
+    public List<HospitalDto> getAllHospitlas() {
         return hospitalService.getAllHospitals();
     }
 
     @GetMapping("/{hospitalName}")
-    public List<DoctorDTO> getAllDoctorsFromHospital(@PathVariable String hospitalName){
+    public List<DoctorDTO> getAllDoctorsFromHospital(@PathVariable String hospitalName) {
         return hospitalService.getAllDoctorsFromHospital(hospitalName);
     }
 }

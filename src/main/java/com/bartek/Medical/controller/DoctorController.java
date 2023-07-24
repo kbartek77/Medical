@@ -2,6 +2,7 @@ package com.bartek.Medical.controller;
 
 import com.bartek.Medical.model.Doctor;
 import com.bartek.Medical.model.DoctorDTO;
+import com.bartek.Medical.model.MessageDto;
 import com.bartek.Medical.service.DoctorService;
 import lombok.RequiredArgsConstructor;
 
@@ -36,17 +37,13 @@ public class DoctorController {
 
     @DeleteMapping("/{id}")
     public boolean deleteDoctorById(@PathVariable Long id) {
-    return doctorService.deleteDoctorById(id);
+        return doctorService.deleteDoctorById(id);
     }
 
     @PatchMapping("/{id}/password")
-    public String updatePassword(@PathVariable Long id, @RequestBody String newPassword) {
-        boolean updated = doctorService.updatePassowrd(id, newPassword);
-        if (updated) {
-            return "Hasło zostało zaktualizowane";
-        } else {
-            return "Doktor o takim Id nie został odnaleziony";
-        }
+    public ResponseEntity<MessageDto> updatePassword(@PathVariable Long id, @RequestBody String newPassword) {
+        MessageDto messageDto = doctorService.updatePassoword(id, newPassword);
+        return ResponseEntity.status(messageDto.getHttpStatus()).body(messageDto);
     }
 
     @PostMapping("/{id}/hospitals")

@@ -9,7 +9,9 @@ import com.bartek.Medical.mapper.DoctorMapper;
 import com.bartek.Medical.model.Doctor;
 import com.bartek.Medical.model.DoctorDTO;
 import com.bartek.Medical.model.Hospital;
+import com.bartek.Medical.model.MessageDto;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,13 +29,14 @@ public class DoctorService {
         return doctorMapper.toDtosList(doctors);
     }
 
-    public DoctorDTO getDoctorById(Long Id) {
-        Optional<Doctor> doctorOptional = doctorRepository.findById(Id);
+    public DoctorDTO getDoctorById(Long id) {
+        Optional<Doctor> doctorOptional = doctorRepository.findById(id);
         Doctor doctor = doctorOptional.orElseThrow(() -> new DoctorNotFoundException("Doktor o podanym Id nie został odnazleziony. "));
         return doctorMapper.toDto(doctor);
     }
 
     public DoctorDTO addDoctor(DoctorDTO doctorDTO) {
+
         Doctor doctor = doctorMapper.toEntity(doctorDTO);
 
         doctorRepository.save(doctor);
@@ -41,25 +44,25 @@ public class DoctorService {
         return doctorDTO;
     }
 
-    public boolean deleteDoctorById(Long Id) {
-        Optional<Doctor> doctor = doctorRepository.findById(Id);
-        if (doctor.isEmpty()) {
-            throw new DoctorNotFoundException("Doktor o podanym Id nie został odnaleziony.");
-        }
-        doctorRepository.delete(doctor.get());
+    public boolean deleteDoctorById(Long id) {
+        Optional<Doctor> doctor = doctorRepository.findById(id);
+
+        Doctor foundDoctor = doctor.orElseThrow(() -> new DoctorNotFoundException("Doktor o podanym Id nie został odnaleziony."));
+
+        doctorRepository.delete(foundDoctor);
         return true;
     }
 
-    public boolean updatePassowrd(Long Id, String newPassword) {
-        Optional<Doctor> doctorOptional = doctorRepository.findById(Id);
+    public MessageDto updatePassoword(Long id, String newPassword) {
+        Optional<Doctor> doctorOptional = doctorRepository.findById(id);
         Doctor doctor = doctorOptional.orElseThrow(() -> new DoctorNotFoundException("Doktor o podanym Id nie został odnaleziony."));
         doctor.setPassword(newPassword);
         doctorRepository.save(doctor);
-        return true;
+        return new MessageDto("Twoje hasło zostało zmienione", HttpStatus.OK, "CHANGE_PASSWORD");
     }
 
-    public DoctorDTO addHospitalToDoctor(Long Id, String hospitalName) {
-        Doctor doctor = doctorRepository.findById(Id)
+    public DoctorDTO addHospitalToDoctor(Long id, String hospitalName) {
+        Doctor doctor = doctorRepository.findById(id)
                 .orElseThrow(() -> new DoctorNotFoundException("Doktor o podanym Id nie został odnaleziony"));
         Hospital hospital = hospitalRepository.findByName(hospitalName)
                 .orElseThrow(() -> new InvalidNameHospitalException("Szpital o takiej nazwie nie został odnaleziony"));

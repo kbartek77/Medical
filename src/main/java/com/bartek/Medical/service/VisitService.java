@@ -8,13 +8,14 @@ import com.bartek.Medical.model.VisitDto;
 import com.bartek.Medical.patientRepositoryImpl.PatientRepository;
 import com.bartek.Medical.visitRepostioryImpl.VisitRespository;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class VisitService {
     private final VisitRespository visitRespository;
     private final PatientRepository patientRepository;

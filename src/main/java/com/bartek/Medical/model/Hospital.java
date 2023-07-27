@@ -21,6 +21,6 @@ public class Hospital {
     private String postalCode;
     private String street;
     private String numberOfBuilding;
-    @ManyToMany(mappedBy = "hospitals")
-    private Set<Doctor> doctors = new HashSet<>();
+    @OneToMany(mappedBy = "hospital")
+    private Set<Doctor> doctors;
 }

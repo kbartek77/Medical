@@ -23,12 +23,8 @@ public class Doctor {
     private String firstName;
     private String lastName;
     private String specialization;
-    @ManyToMany
-    @JoinTable(
-            name = "doctor_hospital",
-            joinColumns = @JoinColumn(name = "doctor_id"),
-            inverseJoinColumns = @JoinColumn(name = "hospital_id")
-    )
-    private Set<Hospital> hospitals = new HashSet<>();
+    @ManyToOne
+    @JoinColumn(name = "hospital_id")
+    private Hospital hospital;
 }
 

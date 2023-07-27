@@ -3,18 +3,12 @@ databaseChangeLog:
       id: 5
       author: kbartek
       changes:
-        - createTable:
-            tableName: hospital_doctor
+        - addColumn:
+            tableName: doctor
             columns:
               - column:
                   constraints:
-                    foreignKeyName: fk_doctor_id
-                    references: doctor
-                  name: doctor_id
-                  type: int
-              - column:
-                  constraints:
+                    foreignKey: true
                     foreignKeyName: fk_hospital_id
-                    references: hospital
                   name: hospital_id
                   type: int

@@ -36,8 +36,9 @@ public class DoctorController {
     }
 
     @DeleteMapping("/{id}")
-    public boolean deleteDoctorById(@PathVariable Long id) {
-        return doctorService.deleteDoctorById(id);
+    public ResponseEntity <MessageDto> deleteDoctorById(@PathVariable Long id) {
+        MessageDto messageDto = doctorService.deleteDoctorById(id);
+        return ResponseEntity.status(messageDto.getHttpStatus()).body(messageDto);
     }
 
     @PatchMapping("/{id}/password")

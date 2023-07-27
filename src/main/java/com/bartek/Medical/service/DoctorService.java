@@ -44,13 +44,13 @@ public class DoctorService {
         return doctorDTO;
     }
 
-    public boolean deleteDoctorById(Long id) {
+    public MessageDto deleteDoctorById(Long id) {
         Optional<Doctor> doctor = doctorRepository.findById(id);
 
         Doctor foundDoctor = doctor.orElseThrow(() -> new DoctorNotFoundException("Doktor o podanym Id nie został odnaleziony."));
 
         doctorRepository.delete(foundDoctor);
-        return true;
+        return new MessageDto("Doktor został usunięty", HttpStatus.OK, "DELETE_DOCTOR");
     }
 
     public MessageDto updatePassoword(Long id, String newPassword) {
@@ -67,10 +67,8 @@ public class DoctorService {
         Hospital hospital = hospitalRepository.findByName(hospitalName)
                 .orElseThrow(() -> new InvalidNameHospitalException("Szpital o takiej nazwie nie został odnaleziony"));
 
-        doctor.getHospitals().add(hospital);
+        doctor.setHospital(hospital);
 
-        doctorRepository.save(doctor);
-
-        return doctorMapper.toDto(doctor);
+        return doctorMapper.toDto(doctorRepository.save(doctor));
     }
 }

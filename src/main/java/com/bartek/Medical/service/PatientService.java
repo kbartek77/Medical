@@ -8,13 +8,14 @@ import com.bartek.Medical.model.Patient;
 import com.bartek.Medical.model.PatientDto;
 import com.bartek.Medical.patientRepositoryImpl.PatientRepository;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class PatientService {
     private final PatientRepository patientRepository;
     private final PatientMapper patientMapper;

@@ -2,6 +2,7 @@ package com.bartek.Medical.controller;
 
 import com.bartek.Medical.model.Doctor;
 import com.bartek.Medical.model.DoctorDTO;
+import com.bartek.Medical.model.Hospital;
 import com.bartek.Medical.model.MessageDto;
 import com.bartek.Medical.service.DoctorService;
 import lombok.RequiredArgsConstructor;
@@ -48,7 +49,7 @@ public class DoctorController {
     }
 
     @PostMapping("/{id}/hospitals")
-    public ResponseEntity<DoctorDTO> addHospitalToDoctor(@PathVariable Long id, @RequestParam String hospitalName) {
+    public ResponseEntity<DoctorDTO> addHospitalToDoctor(@PathVariable Long id, @RequestBody String hospitalName) {
         DoctorDTO doctorWithHospital = doctorService.addHospitalToDoctor(id, hospitalName);
         return ResponseEntity.ok(doctorWithHospital);
     }

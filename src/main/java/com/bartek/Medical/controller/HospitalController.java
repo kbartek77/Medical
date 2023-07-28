@@ -31,3 +31,4 @@ public class HospitalController {
         return hospitalService.getAllDoctorsFromHospital(hospitalName);
     }
 }
+

@@ -39,13 +39,13 @@ INSERT INTO visit (DATE_TIME, END_DATE_TIME)
 VALUES ('2024-07-13 14:30:00','2024-07-13 15:30:00');
 
 INSERT INTO hospital (NAME, TOWN, POSTAL_CODE, STREET, NUMBER_OF_BUILDING)
-VALUES ('Hospital A', 'Town A', '12345', 'Main Street', '123');
+VALUES ('HospitalA', 'Town A', '12345', 'Main Street', '123');
 
 INSERT INTO hospital (NAME, TOWN, POSTAL_CODE, STREET, NUMBER_OF_BUILDING)
 VALUES ('Hospital B', 'Town B', '67890', 'Second Street', '456');
 
 INSERT INTO doctor (EMAIL, PASSWORD, FIRST_NAME, LAST_NAME, SPECIALIZATION, HOSPITAL_ID)
-VALUES ('james.smith@example.com', 'doctor123', 'James', 'Smith', 'Cardiology', 1L);
+VALUES ('james.smith@example.com', 'doctor123', 'James', 'Smith', 'Cardiology', 1);
 
 INSERT INTO doctor (EMAIL, PASSWORD, FIRST_NAME, LAST_NAME, SPECIALIZATION, HOSPITAL_ID)
 VALUES ('emily.johnson@example.com', 'doctor456', 'Emily', 'Johnson', 'Dermatology', 2L);

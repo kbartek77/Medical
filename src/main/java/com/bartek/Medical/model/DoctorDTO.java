@@ -16,4 +16,11 @@ public class DoctorDTO {
     private String email;
     private String password;
     private Hospital hospital;
+
+    public void setId(long id) {
+        this.id = id;
+    }
+    public long getId() {
+        return id;
+    }
 }

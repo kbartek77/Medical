@@ -9,13 +9,14 @@ import com.bartek.Medical.model.DoctorDTO;
 import com.bartek.Medical.model.Hospital;
 import com.bartek.Medical.model.HospitalDto;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class HospitalService {
     private final HospitalRepository hospitalRepository;
     private final HospitalMapper hospitalMapper;

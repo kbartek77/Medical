@@ -11,6 +11,7 @@ import com.bartek.Medical.model.DoctorDTO;
 import com.bartek.Medical.model.Hospital;
 import com.bartek.Medical.model.MessageDto;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -18,11 +19,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class DoctorService {
     private final DoctorRepository doctorRepository;
     private final DoctorMapper doctorMapper;
-    private HospitalRepository hospitalRepository;
+    private final HospitalRepository hospitalRepository;
 
     public List<DoctorDTO> getAllDoctors() {
         List<Doctor> doctors = doctorRepository.findAll();

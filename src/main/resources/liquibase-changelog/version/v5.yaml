@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: 5
+      author: kbartek
+      changes:
+        - addColumn:
+            tableName: doctor
+            columns:
+              - column:
+                  constraints:
+                    foreignKey: true
+                    foreignKeyName: fk_hospital_id
+                  name: hospital_id
+                  type: int

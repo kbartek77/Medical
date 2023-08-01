@@ -1,0 +1,31 @@
+databaseChangeLog:
+  - changeSet:
+      id: 4
+      author: kbartek
+      changes:
+        - createTable:
+            tableName: hospital
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: pk_hospital_id
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(100)
+              - column:
+                  name: town
+                  type: varchar(50)
+              - column:
+                  name: postal_code
+                  type: varchar(10)
+              - column:
+                  name: street
+                  type: varchar(100)
+              - column:
+                  name: number_of_building
+                  type: varchar(20)

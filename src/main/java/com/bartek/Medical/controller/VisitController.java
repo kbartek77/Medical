@@ -8,12 +8,13 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@Slf4j
 @RestController
 @RequestMapping("/visits")
 @AllArgsConstructor
@@ -27,6 +28,7 @@ public class VisitController {
     })
     @PostMapping
     public ResponseEntity<VisitDto> createVisit(@RequestBody VisitDto visitDto) {
+        log.info("Creating visit");
         VisitDto createdVisit = visitService.createVisit(visitDto);
         return ResponseEntity.ok(createdVisit);
     }
@@ -39,6 +41,7 @@ public class VisitController {
     })
     @PatchMapping("/{visitId}/assign")
     public ResponseEntity<VisitDto> assignPatientToVisit(@PathVariable Long visitId, @RequestBody Long patientId) {
+        log.info("Assign patient to visit");
         VisitDto assignedVisit = visitService.assignPatientToVisit(visitId, patientId);
         return ResponseEntity.ok(assignedVisit);
     }
@@ -50,6 +53,7 @@ public class VisitController {
     })
     @GetMapping("/patient/{patientId}")
     public ResponseEntity<List<VisitDto>> getPatientVisits(@PathVariable Long patientId) {
+        log.info("get all visits from patient");
         List<VisitDto> patientVisits = visitService.getPatientVisits(patientId);
         return ResponseEntity.ok(patientVisits);
     }

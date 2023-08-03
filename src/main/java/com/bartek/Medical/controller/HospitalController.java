@@ -9,12 +9,13 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@Slf4j
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/hospitals")
@@ -29,6 +30,7 @@ public class HospitalController {
     })
     @PostMapping
     public ResponseEntity<HospitalDto> addHospital(@RequestBody HospitalDto hospitalDto) {
+        log.info("added Hospitals {}",hospitalDto.toString());
         HospitalDto addHospital = hospitalService.addHospital(hospitalDto);
         return ResponseEntity.ok(addHospital);
     }
@@ -40,6 +42,7 @@ public class HospitalController {
     })
     @GetMapping
     public List<HospitalDto> getAllHospitlas() {
+        log.info("Getting all hospitals...");
         return hospitalService.getAllHospitals();
     }
     @Operation(summary = "Get all doctors from one hospital", tags = "Hospital")
@@ -50,6 +53,7 @@ public class HospitalController {
     })
     @GetMapping("/{hospitalName}")
     public List<DoctorDTO> getAllDoctorsFromHospital(@PathVariable String hospitalName) {
+        log.info("Getting all doctors from one hospital..");
         return hospitalService.getAllDoctorsFromHospital(hospitalName);
     }
 }
